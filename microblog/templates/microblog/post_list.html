@@ -1,0 +1,52 @@
+{% extends 'microblog/index.html' %}
+{% block content %}
+		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+		<!--{% if envoi %}Votre message a bien été envoyé !{% endif %}-->
+		<section class="section extra-margins text-center">
+				<a href="{% url 'post_new' %}" class="btn btn-so"><i class="fa fa-pencil-square-o"></i> Add my post</a>
+		</section>
+
+		{% if latest_userpost_list %}
+		
+		    <!--Section: Blog v.2-->
+			<section class="section extra-margins text-center">
+
+			    <!--Section heading-->
+			    <h1 class="section-heading">Latest post</h1>
+
+			    <div class="row">
+			    	{% for userpost in latest_userpost_list %}
+			        <!--column-->
+			        <div class="col-lg-4 col-md-12 mb-r">
+			            <!--Featured image-->
+			            <div class="view overlay hm-white-slight mb-2">
+			                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20({{ userpost.id }}).jpg" alt="First sample image">
+			                <a href="{% url 'post_detail' userpost.pk %}">
+			                    <div class="mask waves-effect waves-light"></div>
+			                </a>
+			            </div>
+			            <!--Excerpt-->
+				            <p>by <a><strong>{{ userpost.author }}</strong></a>, {{ userpost.pub_date }}</p>
+				            <p>{{ userpost.userpost_text }}</p>
+			            
+			        </div>
+			        <!--/column-->
+			        {% endfor %}
+			        <div class="col-lg-4 col-md-12 mb-r">
+			        	<div class="view overlay hm-white-slight mb-2">
+			        		<img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(100).jpg" alt="First sample image">
+			        		<a href="{% url 'post_all' %}" class="btn btn-large-card"><i class="fa fa-plus"></i></a>
+			        	</div>
+			        </div>
+			    </div>
+
+			</section>
+			<!--/Section: Blog v.2-->
+		{% else %}
+		    <p>No posts are available.</p>
+		{% endif %}
+{% endblock %}
+
+
+

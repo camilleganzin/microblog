@@ -1,0 +1,122 @@
+{% load static %}
+<html>
+    <head>
+        <title>MicroBlog</title>
+        <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Material Design Bootstrap -->
+    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    
+    <style rel="stylesheet">
+        /* TEMPLATE STYLES */
+        .nopadding {
+            margin-top: 0 !important;
+        }
+        
+         .navbar {
+            background-color: #2BBBAD;
+        }
+        
+        footer.page-footer {
+            background-color: #49071c;
+            margin-top: 2rem;
+        }
+        .pattern-4 {
+            background-attachment: fixed;
+        }
+        .btn-so {
+        	background: #f69c55;
+        	margin-top: 50px;
+    		width: 100%;
+        }
+        .btn-large-card {
+        	position: absolute;
+		    top: 0;
+		    bottom: 0;
+		    left: 0;
+		    right: 0;
+        }
+        .btn-large-card i {
+        	font-size: 8em !important;
+    		line-height: 2em;
+        }
+        .overlay-text {
+        	position: absolute;
+        	top: 20%;
+    		left: 10%;
+        	color: white;
+    		z-index: 10;
+    		font-weight: lighter;
+        }
+        #logout-icon {
+        	line-height: 2.5;
+        	margin-left: 20px;
+        }
+        #logout-icon i {
+        	margin-right: 5px;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="page-header">
+            <nav class="navbar navbar-toggleable-md navbar-dark">
+                    <div class="container">
+                        <a class="navbar-brand center" href="/microblog/">
+                            <h1>MicroBlog</h1>
+                        </a>
+                        {% if user.is_authenticated and backends.associated %}
+                        <div class="collapse navbar-collapse" id="navbarNav4">
+                            <ul class="navbar-nav ml-auto nav-flex-icons">
+                                <li class="nav-item">
+                                    <a class="nav-link waves-effect waves-light">1 <i class="fa fa-envelope"></i></a>
+                                </li>
+                                <li id="logout-icon" class="nav-item">
+                                	<a lass="nav-link waves-effect waves-light" href="{% url 'logout_view' %}"><i class="fa fa-sign-out"></i>Disconnection</a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        	<div class="collapse navbar-collapse" id="navbarNav4">
+	                            <ul class="navbar-nav ml-auto nav-flex-icons">
+	                                <li class="nav-item">
+	                                    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
+	                                </li>
+								</ul>
+							</div>
+                        {% endif %}
+                    </div>
+            </nav>
+        </div>
+        <div class="container">
+        	{% if user.is_authenticated and backends.associated %}
+				{% block content %}
+            	{% endblock %}
+            {% else %}
+            <div class="view overlay hm-white-slight mb-2">
+            	<h1 class="overlay-text">Click to login and see everything !!</h1>
+	            <img src="{% static 'img/jpg/FacebookTeensHP-450751029.jpg' %}" alt="First sample image">
+	            <a href="{% url 'social:begin' 'google-oauth2' %}">
+	                <div class="mask waves-effect waves-light"></div>
+	            </a>
+	        </div>
+			{% endif %}
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+        {% block javascript %}
+        	<script type="text/javascript">
+        		$('#id_userpost_text').change(function (){
+        			console.log( $(this).val() );
+        		});
+        	</script>
+        {% endblock %}
+    </body>
+</html>
+

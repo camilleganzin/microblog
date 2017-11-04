@@ -1,0 +1,32 @@
+{% extends 'microblog/index.html' %}
+{% block content %}
+<!--Section: Blog v.2-->
+			<section class="section extra-margins text-center">
+
+			    <!--Section heading-->
+			{% if latest_userpost_list %}
+			    <div class="row">
+			    	{% for userpost in latest_userpost_list %}
+			        <!--column-->
+			        <div class="col-lg-4 col-md-12 mb-r">
+			            <!--Featured image-->
+			            <div class="view overlay hm-white-slight mb-2">
+			                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20({{ userpost.id }}).jpg" alt="First sample image">
+			                <a href="{% url 'post_detail' userpost.pk %}">
+			                    <div class="mask waves-effect waves-light"></div>
+			                </a>
+			            </div>
+			            <!--Excerpt-->
+				            <p>by <a><strong>{{ userpost.author }}</strong></a>, {{ userpost.pub_date }}</p>
+				            <p>{{ userpost.userpost_text }}</p>
+			            
+			        </div>
+			        <!--/column-->
+			        {% endfor %}
+			    </div>
+			{% else %}
+			    <p>No posts are available.</p>
+			{% endif %}
+			</section>
+			<!--/Section: Blog v.2-->
+{% endblock %}

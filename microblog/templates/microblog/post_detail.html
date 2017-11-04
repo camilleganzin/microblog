@@ -1,0 +1,17 @@
+{% extends 'microblog/index.html' %}
+{% block content %}
+    <div class="col-lg-12 col-md-12 mb-r">
+        <!--Featured image-->
+        <div class="view overlay hm-white-slight mb-2">
+            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20({{ userpost.id }}).jpg" alt="First sample image">
+            <a href="{% url 'post_detail' userpost.pk %}">
+                <div class="mask waves-effect waves-light"></div>
+            </a>
+        </div>
+            <p>{{ userpost.pub_date }}</p>  
+            <p>{{ userpost.userpost_text }}</p>
+            {% if userpost.author == user or user.is_staff == True %}
+        		<a href="{% url 'microblog:post_delete' userpost.pk %}">Delete</a>
+        	{% endif %}
+	</div>
+{% endblock %}
